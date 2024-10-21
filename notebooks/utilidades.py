@@ -5,26 +5,32 @@
 
 
 def rangointercuartil(df):
-    Q1 = df.quantile(0.25)
-    Q3 = df.quantile(0.75)
-    IQR = Q3-Q1
-    return IQR
+    numeric_df = df.select_dtypes(include=['number'])
+    Q1 = numeric_df.quantile(0.25)
+    Q3 = numeric_df.quantile(0.75)
+    IQR = Q3 - Q1
 
 def limites(df):
-    Q1 = df.quantile(0.25)
-    Q3 = df.quantile(0.75)
-    IQR = Q3-Q1
-    limite_inferior = Q1 - (1.5*IQR)
-    limite_superior = Q3 + (1.5*IQR)
+    numeric_df = df.select_dtypes(include=['number']).dropna()
+    Q1 = numeric_df.quantile(0.25)
+    Q3 = numeric_df.quantile(0.75)
+    IQR = Q3 - Q1
+    
+    limite_inferior = Q1 - (1.5 * IQR)
+    limite_superior = Q3 + (1.5 * IQR)
+    
     return limite_inferior, limite_superior
 
 def detectar_outliers(df, columna):
+    # Asegurar que la columna es numérica
+    if df[columna].dtype not in ['float64', 'int64']:
+        raise ValueError(f"La columna '{columna}' no es numérica.")
+    
     # Obtener los límites inferior y superior
-    limite_inferior, limite_superior = limites(df[columna])
+    limite_inferior, limite_superior = limites(df[[columna]])
 
     # Encontrar los outliers
-    outliers = df[(df[columna] < limite_inferior) | (df[columna] > limite_superior)]
-
+    outliers = df[(df[columna] < limite_inferior[columna]) | (df[columna] > limite_superior[columna])]
     return outliers
 
 
