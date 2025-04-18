@@ -1,4 +1,4 @@
-# Análisis de Precios de Diamantes usando Ciencia de Datos
+# Análisis de Precios de Diamantes
 
 ## Descripción General
 Este proyecto tiene como objetivo analizar los factores que influyen en el precio de los diamantes utilizando técnicas de ciencia de datos. A través de la exploración de datos, visualizaciones y modelos predictivos, se identifican patrones que determinan el valor de un diamante basado en sus características físicas, como el quilataje, el color, la claridad y el corte.
